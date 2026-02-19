@@ -3,291 +3,312 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NBA Prediction Standings</title>
+  <title>Postseason Oracle | NBA Predict</title>
   <style>
     :root {
-      --bg: #f1f4f9;
-      --panel: #ffffff;
-      --line: #d7dfec;
-      --text: #111827;
-      --muted: #64748b;
-      --nav: #0a0b0f;
-      --blue: #1d4ed8;
-      --red: #dc2626;
-      --indigo: #4338ca;
+      --bg: #06090f;
+      --panel: #0f141d;
+      --panel-2: #131a26;
+      --line: #263248;
+      --text: #edf2ff;
+      --muted: #92a0bb;
+      --blue: #2d8cff;
+      --green: #22c55e;
+      --danger: #ef4444;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(1200px 600px at 10% -20%, #c7d7ff 0%, transparent 60%),
-        radial-gradient(1000px 600px at 100% 0%, #ffd5d5 0%, transparent 55%),
+        radial-gradient(1100px 420px at 10% -10%, rgba(36, 99, 235, 0.26), transparent 60%),
+        radial-gradient(900px 500px at 100% 0%, rgba(56, 189, 248, 0.16), transparent 55%),
         var(--bg);
-      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
     }
 
     .topbar {
-      height: 58px;
-      background: var(--nav);
-      color: #fff;
+      height: 54px;
+      border-bottom: 1px solid #1b2740;
+      background: #081226;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 18px;
-      border-bottom: 1px solid #1f2433;
+      padding: 0 14px;
       position: sticky;
       top: 0;
-      z-index: 30;
+      z-index: 20;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       font-weight: 800;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.04em;
     }
 
     .brand img {
-      width: 30px;
-      height: 30px;
-      object-fit: contain;
+      width: 24px;
+      height: 24px;
       background: #fff;
       border-radius: 2px;
       padding: 1px;
     }
 
-    .menu {
+    .nav {
       display: flex;
-      align-items: center;
-      gap: 18px;
-      font-size: 12px;
+      gap: 12px;
+      font-size: 11px;
       text-transform: uppercase;
+      letter-spacing: 0.04em;
       font-weight: 700;
-      letter-spacing: 0.05em;
     }
 
-    .menu a {
+    .nav a {
+      color: #c4d2ef;
       text-decoration: none;
-      color: #dce3f5;
-      padding: 4px 0;
       border-bottom: 2px solid transparent;
+      padding: 4px 0;
     }
 
-    .menu a.active {
+    .nav a.active {
       color: #fff;
       border-bottom-color: #fff;
     }
 
-    .page {
-      width: min(1680px, 96vw);
-      margin: 14px auto 28px;
+    .container {
+      width: min(1160px, 96vw);
+      margin: 16px auto 34px;
     }
 
-    .hero {
-      background: linear-gradient(110deg, #0f1d3c 0%, #152f69 45%, #5f1830 100%);
-      color: #f8fbff;
-      border-radius: 16px;
-      border: 1px solid #253e75;
-      box-shadow: 0 20px 40px rgba(17, 24, 39, 0.2);
-      padding: 18px;
-      margin-bottom: 16px;
-    }
-
-    .hero-top {
+    .head {
       display: flex;
       justify-content: space-between;
       gap: 12px;
+      align-items: end;
+      margin-bottom: 12px;
       flex-wrap: wrap;
-      margin-bottom: 14px;
     }
 
-    .hero-title h1 {
+    .title {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
       margin: 0;
-      font-size: 22px;
-      line-height: 1.2;
-      font-weight: 800;
       letter-spacing: 0.01em;
     }
 
-    .hero-title p {
+    .sub {
       margin: 6px 0 0;
-      color: #c5d4ff;
-      font-size: 13px;
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .back {
-      color: #fff;
-      text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      border-radius: 999px;
-      padding: 7px 12px;
+      color: var(--muted);
       font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
       font-weight: 700;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .pill {
+      border: 1px solid #2a3956;
+      background: #0b1321;
+      color: #d7e2ff;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .pill.active {
+      background: #123260;
+      border-color: #3271d5;
+      color: #fff;
+    }
+
+    .search {
+      border: 1px solid #2a3956;
+      background: #0b1321;
+      color: #f1f5ff;
+      border-radius: 999px;
+      height: 34px;
+      width: 210px;
+      padding: 0 12px;
+      font-size: 12px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .metric {
+      background: linear-gradient(170deg, #111a2a, #0d1320);
+      border: 1px solid #25324a;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .metric .k {
+      font-size: 10px;
+      color: #9ab0d7;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .metric .v {
+      margin-top: 5px;
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .board {
+      border: 1px solid #2a364f;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #0a1019;
+    }
+
+    .board-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border-bottom: 1px solid #24324b;
+      background: linear-gradient(90deg, #0e192a, #111f34);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #b3c4e4;
     }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(4, minmax(150px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(6, minmax(150px, 1fr));
+      gap: 1px;
+      background: #1e2a40;
     }
 
-    .card {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 12px;
-      padding: 10px 12px;
-      min-height: 78px;
+    .team-card {
+      background: var(--panel);
+      min-height: 138px;
+      padding: 9px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-top: 2px solid transparent;
     }
 
-    .card .label {
-      font-size: 11px;
-      color: #d8e3ff;
+    .team-card.east { border-top-color: #2d8cff; }
+    .team-card.west { border-top-color: #22c55e; }
+
+    .tag-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+      color: #9eb0cf;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 4px;
-    }
-
-    .card .value {
-      font-size: 20px;
       font-weight: 800;
-      line-height: 1.15;
     }
 
-    .card .sub {
-      font-size: 12px;
-      color: #dbe7ff;
-      margin-top: 3px;
-    }
+    .delta.up { color: var(--green); }
+    .delta.down { color: var(--danger); }
 
-    .conference {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      overflow: hidden;
-      margin-top: 14px;
-      box-shadow: 0 12px 25px rgba(30, 41, 59, 0.06);
-    }
-
-    .conference-head {
+    .team-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(90deg, #f8fbff, #f3f6fc);
+      gap: 8px;
+      margin-top: 6px;
     }
 
-    .conference-head h2 {
-      margin: 0;
-      font-size: 18px;
+    .logo-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid #3b4f71;
+      background: radial-gradient(circle at 30% 20%, #1d4ed8, #0b1730 70%);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 9px;
       font-weight: 800;
-      letter-spacing: 0.01em;
     }
 
-    .chip {
-      font-size: 11px;
+    .team-name {
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .tiny {
+      font-size: 10px;
+      color: #8ea1c2;
+      margin-top: 1px;
+    }
+
+    .prob {
+      margin-top: 8px;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .bar {
+      margin-top: 7px;
+      height: 4px;
       border-radius: 999px;
-      padding: 4px 9px;
-      font-weight: 700;
-      color: #1e293b;
-      background: #e8eefc;
-      border: 1px solid #d4dff7;
+      background: #1f2c43;
+      overflow: hidden;
     }
 
-    .table-wrap {
-      overflow-x: auto;
-      background: #fff;
+    .bar > div {
+      height: 100%;
+      background: linear-gradient(90deg, #2f8fff, #35d0ff);
     }
 
-    table {
-      width: 100%;
-      min-width: 1380px;
-      border-collapse: collapse;
-      table-layout: fixed;
-      font-size: 12px;
-    }
-
-    thead th {
-      text-align: center;
+    .stats {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
       font-size: 10px;
-      color: #475569;
-      padding: 9px 6px;
-      border-bottom: 1px solid var(--line);
-      letter-spacing: 0.04em;
-      background: #f8fbff;
+      color: #95a8cb;
+      gap: 8px;
     }
 
-    tbody tr:nth-child(2n) {
-      background: #fbfdff;
-    }
-
-    tbody td {
-      padding: 9px 6px;
+    .empty {
+      padding: 20px;
       text-align: center;
-      border-bottom: 1px solid #e7edf8;
-      color: #1f2937;
+      color: #9db0d2;
+      font-size: 13px;
     }
 
-    tbody tr:last-child td { border-bottom: 0; }
-
-    .rank { width: 42px; font-weight: 800; }
-    .team { width: 280px; text-align: left; color: var(--blue); font-weight: 800; }
-
-    .team small {
-      display: block;
-      color: var(--muted);
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 10px;
-      margin-top: 2px;
-      letter-spacing: 0.02em;
+    @media (max-width: 1160px) {
+      .cards { grid-template-columns: repeat(4, minmax(150px, 1fr)); }
+      .summary { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
     }
 
-    .wcol, .lcol { width: 52px; }
-    .pct { width: 70px; }
-    .gb { width: 58px; }
-
-    .status-up { color: #166534; font-weight: 700; }
-    .status-down { color: #991b1b; font-weight: 700; }
-
-    @media (max-width: 1100px) {
-      .cards { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
-      .menu { gap: 12px; }
-    }
-
-    @media (max-width: 700px) {
-      .topbar {
-        height: auto;
-        min-height: 58px;
-        padding: 10px 12px;
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 8px;
-      }
-      .menu {
-        display: flex;
-        width: 100%;
-        overflow-x: auto;
-        white-space: nowrap;
-        gap: 12px;
-        font-size: 11px;
-        padding-bottom: 2px;
-      }
-      .menu a {
-        flex: 0 0 auto;
-      }
-      .hero-title h1 { font-size: 18px; }
-      .cards { grid-template-columns: 1fr; }
+    @media (max-width: 760px) {
+      .nav { display: none; }
+      .cards { grid-template-columns: repeat(2, minmax(130px, 1fr)); }
+      .title { font-size: 24px; }
+      .search { width: 160px; }
     }
   </style>
 </head>
@@ -297,217 +318,180 @@
       <img src="./assets/logo-nba.svg" alt="NBA" />
       <span>NBA PREDICT</span>
     </div>
-    <nav class="menu" aria-label="Main">
+    <nav class="nav">
       <a href="./index.html">Home</a>
-      <a class="active" href="./prediction.html">Predictions</a>
-      <a href="#">Standings</a>
+      <a class="active" href="./prediction.html">Postseason Oracle</a>
       <a href="#">Teams</a>
       <a href="#">Players</a>
     </nav>
   </header>
 
-  <main class="page">
-    <section class="hero">
-      <div class="hero-top">
-        <div class="hero-title">
-          <h1>Playoff Probability Dashboard</h1>
-          <p>Conference boards generated from your latest prediction feed.</p>
-        </div>
-        <div class="hero-actions">
-          <a class="back" href="./index.html">Back to Home</a>
-        </div>
+  <main class="container">
+    <section class="head">
+      <div>
+        <h1 class="title">POSTSEASON ORACLE</h1>
+        <p class="sub">Powered by prediction model | Conference probabilities</p>
       </div>
-      <div class="cards">
-        <article class="card">
-          <div class="label">Top East</div>
-          <div class="value" id="top-east-team">-</div>
-          <div class="sub" id="top-east-prob">-</div>
-        </article>
-        <article class="card">
-          <div class="label">Top West</div>
-          <div class="value" id="top-west-team">-</div>
-          <div class="sub" id="top-west-prob">-</div>
-        </article>
-        <article class="card">
-          <div class="label">Average East Prob</div>
-          <div class="value" id="avg-east">-</div>
-          <div class="sub">Across 15 teams</div>
-        </article>
-        <article class="card">
-          <div class="label">Average West Prob</div>
-          <div class="value" id="avg-west">-</div>
-          <div class="sub">Across 15 teams</div>
-        </article>
+      <div class="controls">
+        <button class="pill active" data-filter="all">All</button>
+        <button class="pill" data-filter="east">East</button>
+        <button class="pill" data-filter="west">West</button>
+        <input id="search" class="search" type="search" placeholder="Search team..." />
       </div>
     </section>
 
-    <section class="conference">
-      <div class="conference-head">
-        <h2>Eastern Conference</h2>
-        <span class="chip">Prediction Rank</span>
-      </div>
-      <div class="table-wrap">
-        <table aria-label="Eastern Conference Standings">
-          <thead>
-            <tr>
-              <th class="rank"></th>
-              <th class="team">TEAM</th>
-              <th class="wcol">W</th>
-              <th class="lcol">L</th>
-              <th class="pct">WIN%</th>
-              <th class="gb">GB</th>
-              <th>LAST10</th>
-              <th>STREAK</th>
-            </tr>
-          </thead>
-          <tbody id="east-body"></tbody>
-        </table>
-      </div>
+    <section class="summary">
+      <article class="metric"><div class="k">Top East</div><div class="v" id="mEast">-</div></article>
+      <article class="metric"><div class="k">Top West</div><div class="v" id="mWest">-</div></article>
+      <article class="metric"><div class="k">Avg Probability</div><div class="v" id="mAvg">-</div></article>
+      <article class="metric"><div class="k">Teams Loaded</div><div class="v" id="mCount">0</div></article>
     </section>
 
-    <section class="conference">
-      <div class="conference-head">
-        <h2>Western Conference</h2>
-        <span class="chip">Prediction Rank</span>
+    <section class="board">
+      <div class="board-head">
+        <span id="boardTitle">All Teams</span>
+        <span id="boardMeta">0 teams</span>
       </div>
-      <div class="table-wrap">
-        <table aria-label="Western Conference Standings">
-          <thead>
-            <tr>
-              <th class="rank"></th>
-              <th class="team">TEAM</th>
-              <th class="wcol">W</th>
-              <th class="lcol">L</th>
-              <th class="pct">WIN%</th>
-              <th class="gb">GB</th>
-              <th>LAST10</th>
-              <th>STREAK</th>
-            </tr>
-          </thead>
-          <tbody id="west-body"></tbody>
-        </table>
-      </div>
+      <div id="cards" class="cards"></div>
     </section>
   </main>
 
   <script>
-    function fmtWinPct(wins, losses) {
-      var games = wins + losses;
-      if (!games) return '.000';
-      return (wins / games).toFixed(3).replace(/^0/, '');
+    var TEAM_META = {
+      'Atlanta Hawks': { conference: 'east', abbr: 'ATL' }, 'Boston Celtics': { conference: 'east', abbr: 'BOS' },
+      'Brooklyn Nets': { conference: 'east', abbr: 'BKN' }, 'Charlotte Hornets': { conference: 'east', abbr: 'CHA' },
+      'Chicago Bulls': { conference: 'east', abbr: 'CHI' }, 'Cleveland Cavaliers': { conference: 'east', abbr: 'CLE' },
+      'Detroit Pistons': { conference: 'east', abbr: 'DET' }, 'Indiana Pacers': { conference: 'east', abbr: 'IND' },
+      'Miami Heat': { conference: 'east', abbr: 'MIA' }, 'Milwaukee Bucks': { conference: 'east', abbr: 'MIL' },
+      'New York Knicks': { conference: 'east', abbr: 'NYK' }, 'Orlando Magic': { conference: 'east', abbr: 'ORL' },
+      'Philadelphia 76ers': { conference: 'east', abbr: 'PHI' }, 'Toronto Raptors': { conference: 'east', abbr: 'TOR' },
+      'Washington Wizards': { conference: 'east', abbr: 'WAS' }, 'Dallas Mavericks': { conference: 'west', abbr: 'DAL' },
+      'Denver Nuggets': { conference: 'west', abbr: 'DEN' }, 'Golden State Warriors': { conference: 'west', abbr: 'GSW' },
+      'Houston Rockets': { conference: 'west', abbr: 'HOU' }, 'LA Clippers': { conference: 'west', abbr: 'LAC' },
+      'Los Angeles Lakers': { conference: 'west', abbr: 'LAL' }, 'Memphis Grizzlies': { conference: 'west', abbr: 'MEM' },
+      'Minnesota Timberwolves': { conference: 'west', abbr: 'MIN' }, 'New Orleans Pelicans': { conference: 'west', abbr: 'NOP' },
+      'Oklahoma City Thunder': { conference: 'west', abbr: 'OKC' }, 'Phoenix Suns': { conference: 'west', abbr: 'PHX' },
+      'Portland Trail Blazers': { conference: 'west', abbr: 'POR' }, 'Sacramento Kings': { conference: 'west', abbr: 'SAC' },
+      'San Antonio Spurs': { conference: 'west', abbr: 'SAS' }, 'Utah Jazz': { conference: 'west', abbr: 'UTA' }
+    };
+
+    var state = { rows: [], filter: 'all', query: '' };
+
+    function pctNum(value) {
+      if (typeof value === 'number') return value;
+      if (typeof value === 'string') return parseFloat(value.replace('%', ''));
+      return NaN;
     }
 
-    function fmtGb(topWins, wins) {
-      if (topWins === wins) return '-';
-      var gb = (topWins - wins) / 2;
-      return Number.isInteger(gb) ? String(gb) : gb.toFixed(1);
+    function normalize(rows) {
+      return rows.map(function (r) {
+        var team = r.TeamName || r.team;
+        var prob = pctNum(r.PlayoffProbability || r.playoff_probability_percent);
+        var winPct = pctNum(r.WinPCT || r.WinPct || '0');
+        var meta = TEAM_META[team] || { conference: 'east', abbr: 'NA' };
+        return {
+          team: team,
+          abbr: meta.abbr,
+          conference: meta.conference,
+          probability: prob,
+          winPct: winPct,
+          points: Number(r.PointsPG || 0),
+          oppPoints: Number(r.OppPointsPG || 0),
+          threePct: String(r.ThreePointPCT || '-')
+        };
+      }).filter(function (r) { return r.team && Number.isFinite(r.probability); })
+        .sort(function (a, b) { return b.probability - a.probability; });
     }
 
-    function renderConference(rows, tbodyId) {
-      var tbody = document.getElementById(tbodyId);
-      if (!tbody) return;
+    function filteredRows() {
+      var list = state.rows;
+      if (state.filter !== 'all') list = list.filter(function (r) { return r.conference === state.filter; });
+      if (state.query) {
+        var q = state.query.toLowerCase();
+        list = list.filter(function (r) { return r.team.toLowerCase().includes(q) || r.abbr.toLowerCase().includes(q); });
+      }
+      return list;
+    }
+
+    function setSummary(rows) {
+      var east = rows.filter(function (r) { return r.conference === 'east'; });
+      var west = rows.filter(function (r) { return r.conference === 'west'; });
+      var topEast = east[0] ? east[0].abbr + ' ' + east[0].probability.toFixed(1) + '%' : '-';
+      var topWest = west[0] ? west[0].abbr + ' ' + west[0].probability.toFixed(1) + '%' : '-';
+      var avg = rows.length ? (rows.reduce(function (s, r) { return s + r.probability; }, 0) / rows.length).toFixed(1) + '%' : '-';
+
+      document.getElementById('mEast').textContent = topEast;
+      document.getElementById('mWest').textContent = topWest;
+      document.getElementById('mAvg').textContent = avg;
+      document.getElementById('mCount').textContent = String(rows.length);
+    }
+
+    function cardHtml(r, i) {
+      var trend = r.probability >= 50 ? '+' + (r.probability - 50).toFixed(1) : '-' + (50 - r.probability).toFixed(1);
+      var trendClass = r.probability >= 50 ? 'up' : 'down';
+      var confLabel = r.conference.toUpperCase();
+      return '<article class="team-card ' + r.conference + '">' +
+        '<div>' +
+          '<div class="tag-row"><span>' + confLabel + '</span><span class="delta ' + trendClass + '">' + trend + '</span></div>' +
+          '<div class="team-row"><span class="logo-dot">' + r.abbr + '</span><div><div class="team-name">' + r.abbr + '</div><div class="tiny">' + r.team + '</div></div></div>' +
+          '<div class="prob">' + r.probability.toFixed(1) + '%</div>' +
+          '<div class="bar"><div style="width:' + Math.max(0, Math.min(100, r.probability)).toFixed(1) + '%"></div></div>' +
+        '</div>' +
+        '<div class="stats"><span>Win: ' + r.winPct.toFixed(1) + '%</span><span>3P: ' + r.threePct + '</span></div>' +
+      '</article>';
+    }
+
+    function render() {
+      var rows = filteredRows();
+      var cards = document.getElementById('cards');
+      var boardTitle = document.getElementById('boardTitle');
+      var boardMeta = document.getElementById('boardMeta');
+
+      var titleMap = { all: 'All Teams', east: 'Eastern Conference', west: 'Western Conference' };
+      boardTitle.textContent = titleMap[state.filter];
+      boardMeta.textContent = rows.length + ' teams';
 
       if (!rows.length) {
-        tbody.innerHTML = '<tr><td colspan="8">No data</td></tr>';
+        cards.innerHTML = '<div class="empty">No teams found for this filter.</div>';
+        cards.style.gridTemplateColumns = '1fr';
         return;
       }
 
-      var sorted = rows.slice().sort(function (a, b) {
-        return b.playoff_probability_percent - a.playoff_probability_percent;
+      cards.style.gridTemplateColumns = '';
+      cards.innerHTML = rows.map(cardHtml).join('');
+    }
+
+    function bindUI() {
+      Array.prototype.forEach.call(document.querySelectorAll('[data-filter]'), function (btn) {
+        btn.addEventListener('click', function () {
+          state.filter = btn.getAttribute('data-filter');
+          Array.prototype.forEach.call(document.querySelectorAll('[data-filter]'), function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          render();
+        });
       });
 
-      var projected = sorted.map(function (row) {
-        var wins = Math.max(0, Math.min(82, Math.round((row.playoff_probability_percent / 100) * 82)));
-        var losses = 82 - wins;
-        var last10w = Math.max(0, Math.min(10, Math.round((row.playoff_probability_percent / 100) * 10)));
-        var last10l = 10 - last10w;
-        var streakType = row.playoff_probability_percent >= 50 ? 'W' : 'L';
-        var streakLen = Math.max(1, Math.min(9, Math.round(Math.abs(row.playoff_probability_percent - 50) / 8)));
-
-        return {
-          team: row.team,
-          abbr: row.abbr,
-          prob: row.playoff_probability_percent,
-          w: wins,
-          l: losses,
-          last10: last10w + '-' + last10l,
-          streak: streakType + ' ' + streakLen
-        };
+      document.getElementById('search').addEventListener('input', function (e) {
+        state.query = e.target.value.trim();
+        render();
       });
-
-      var topWins = projected[0].w;
-
-      tbody.innerHTML = projected.map(function (row, idx) {
-        var streakClass = row.streak.indexOf('W') === 0 ? 'status-up' : 'status-down';
-
-        return '<tr>' +
-          '<td class="rank">' + (idx + 1) + '</td>' +
-          '<td class="team">' + row.team + '<small>' + row.abbr + ' | Playoff ' + row.prob.toFixed(1) + '%</small></td>' +
-          '<td>' + row.w + '</td>' +
-          '<td>' + row.l + '</td>' +
-          '<td>' + fmtWinPct(row.w, row.l) + '</td>' +
-          '<td>' + fmtGb(topWins, row.w) + '</td>' +
-          '<td>' + row.last10 + '</td>' +
-          '<td class="' + streakClass + '">' + row.streak + '</td>' +
-          '</tr>';
-      }).join('');
     }
 
-    function setSummary(east, west) {
-      function avg(list) {
-        if (!list.length) return 0;
-        return list.reduce(function (sum, t) { return sum + t.playoff_probability_percent; }, 0) / list.length;
-      }
-
-      var eastTop = east.slice().sort(function (a, b) {
-        return b.playoff_probability_percent - a.playoff_probability_percent;
-      })[0];
-
-      var westTop = west.slice().sort(function (a, b) {
-        return b.playoff_probability_percent - a.playoff_probability_percent;
-      })[0];
-
-      document.getElementById('top-east-team').textContent = eastTop ? eastTop.team : '-';
-      document.getElementById('top-east-prob').textContent = eastTop ? eastTop.playoff_probability_percent.toFixed(1) + '% playoff probability' : '-';
-
-      document.getElementById('top-west-team').textContent = westTop ? westTop.team : '-';
-      document.getElementById('top-west-prob').textContent = westTop ? westTop.playoff_probability_percent.toFixed(1) + '% playoff probability' : '-';
-
-      document.getElementById('avg-east').textContent = avg(east).toFixed(1) + '%';
-      document.getElementById('avg-west').textContent = avg(west).toFixed(1) + '%';
-    }
-
-    function renderError(message) {
-      var html = '<tr><td colspan="8">' + message + '</td></tr>';
-      var east = document.getElementById('east-body');
-      var west = document.getElementById('west-body');
-      if (east) east.innerHTML = html;
-      if (west) west.innerHTML = html;
-    }
-
-    fetch('./predictions_fixed_final.json')
-      .then(function (response) {
-        if (!response.ok) throw new Error('Could not load predictions_fixed_final.json');
-        return response.json();
+    fetch('./formatted_predictions_percent.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('Could not load formatted_predictions_percent.json');
+        return res.json();
       })
       .then(function (data) {
-        if (!Array.isArray(data)) throw new Error('Invalid JSON format');
-
-        var east = data.filter(function (row) { return row.conference === 'east'; });
-        var west = data.filter(function (row) { return row.conference === 'west'; });
-
-        setSummary(east, west);
-        renderConference(east, 'east-body');
-        renderConference(west, 'west-body');
+        if (!Array.isArray(data)) throw new Error('Invalid prediction payload');
+        state.rows = normalize(data);
+        setSummary(state.rows);
+        bindUI();
+        render();
       })
       .catch(function (err) {
-        renderError(err.message);
+        document.getElementById('cards').innerHTML = '<div class="empty">' + err.message + '</div>';
       });
   </script>
 </body>
 </html>
-
-
-
-
-
