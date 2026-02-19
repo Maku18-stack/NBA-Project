@@ -256,17 +256,27 @@
     .card.east { border-top: 4px solid var(--east); }
     .card.west { border-top: 4px solid var(--west); }
 
-    .team-photo {
-      width: 100%;
+    .team-photo-wrap {
       height: 106px;
-      object-fit: cover;
-      background: #edf2fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background: linear-gradient(180deg, #f8fbff, #eef3fb);
       border-bottom: 1px solid #d8e2f0;
+    }
+
+    .team-photo {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      background: transparent;
     }
 
     .card-body {
       padding: 10px;
-      display: grid;
+      display: flex;
+      flex-direction: column;
       gap: 8px;
       flex: 1;
     }
@@ -306,6 +316,7 @@
     }
 
     .bar {
+      margin-top: auto;
       height: 4px;
       border-radius: 999px;
       background: #e7edf7;
@@ -420,12 +431,38 @@
       'San Antonio Spurs': { conference: 'west', abbr: 'SAS' }, 'Utah Jazz': { conference: 'west', abbr: 'UTA' }
     };
 
-    var PHOTO_POOL = [
-      './assets/thumbnail_small(104).jpeg', './assets/thumbnail_small(105).jpeg', './assets/thumbnail_small(106).jpeg',
-      './assets/thumbnail_small(107).jpeg', './assets/thumbnail_small(108).jpeg', './assets/thumbnail_small(109).jpeg',
-      './assets/GR_MIL_ORL-1.jpg', './assets/GR_MEM_DEN.jpg', './assets/GR_IND_BKN.jpg',
-      './assets/thumbnail_small(99).jpeg', './assets/thumbnail_small(98).jpeg', './assets/thumbnail_small(97).jpeg'
-    ];
+    var TEAM_LOGOS = {
+      'Atlanta Hawks': './assets/logo(1).svg',
+      'Boston Celtics': './assets/logo(2).svg',
+      'Brooklyn Nets': './assets/logo(3).svg',
+      'Charlotte Hornets': './assets/logo(4).svg',
+      'Chicago Bulls': './assets/logo(5).svg',
+      'Cleveland Cavaliers': './assets/logo(6).svg',
+      'Dallas Mavericks': './assets/logo(7).svg',
+      'Denver Nuggets': './assets/logo(8).svg',
+      'Detroit Pistons': './assets/logo(9).svg',
+      'Golden State Warriors': './assets/logo(10).svg',
+      'Houston Rockets': './assets/logo(11).svg',
+      'Indiana Pacers': './assets/logo(12).svg',
+      'LA Clippers': './assets/logo(13).svg',
+      'Los Angeles Lakers': './assets/logo(14).svg',
+      'Memphis Grizzlies': './assets/logo(15).svg',
+      'Miami Heat': './assets/logo(16).svg',
+      'Milwaukee Bucks': './assets/logo(17).svg',
+      'Minnesota Timberwolves': './assets/logo(18).svg',
+      'New Orleans Pelicans': './assets/logo(19).svg',
+      'New York Knicks': './assets/logo(20).svg',
+      'Oklahoma City Thunder': './assets/logo(21).svg',
+      'Orlando Magic': './assets/logo(22).svg',
+      'Philadelphia 76ers': './assets/logo(23).svg',
+      'Phoenix Suns': './assets/logo(24).svg',
+      'Portland Trail Blazers': './assets/logo(25).svg',
+      'Sacramento Kings': './assets/logo(26).svg',
+      'San Antonio Spurs': './assets/logo(27).svg',
+      'Toronto Raptors': './assets/logo(28).svg',
+      'Utah Jazz': './assets/logo(29).svg',
+      'Washington Wizards': './assets/logo.svg'
+    };
 
     var state = { rows: [], filter: 'all', query: '' };
 
@@ -435,17 +472,8 @@
       return NaN;
     }
 
-    function hash(str) {
-      var h = 0;
-      for (var i = 0; i < str.length; i++) {
-        h = ((h << 5) - h) + str.charCodeAt(i);
-        h |= 0;
-      }
-      return Math.abs(h);
-    }
-
     function photoFor(team) {
-      return PHOTO_POOL[hash(team) % PHOTO_POOL.length];
+      return TEAM_LOGOS[team] || './assets/logo-nba.svg';
     }
 
     function normalize(rows) {
@@ -503,7 +531,7 @@
       var trendVal = r.probability - 50;
       var trend = (trendVal >= 0 ? '+' : '') + trendVal.toFixed(1);
       return '<article class="card ' + r.conference + '">' +
-        '<img class="team-photo" src="' + r.photo + '" alt="' + r.team + '" loading="lazy" />' +
+        '<div class="team-photo-wrap"><img class="team-photo" src="' + r.photo + '" alt="' + r.team + '" loading="lazy" /></div>' +
         '<div class="card-body">' +
           '<div class="topline"><span>' + conf + '</span><span>' + trend + '</span></div>' +
           '<div class="abbr">' + r.abbr + '</div>' +
