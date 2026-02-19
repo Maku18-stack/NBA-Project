@@ -242,6 +242,29 @@
       padding: 12px;
     }
 
+    .conference-block {
+      grid-column: 1 / -1;
+      border: 1px solid #d6e0f0;
+      border-radius: 12px;
+      background: #f8fbff;
+      padding: 10px;
+    }
+
+    .conference-title {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #204374;
+      margin: 0 0 10px;
+    }
+
+    .conference-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(170px, 1fr));
+      gap: 12px;
+    }
+
     .card {
       border: 1px solid #d6e0f0;
       border-radius: 12px;
@@ -350,12 +373,14 @@
 
     @media (max-width: 1150px) {
       .cards { grid-template-columns: repeat(3, minmax(170px, 1fr)); }
+      .conference-grid { grid-template-columns: repeat(3, minmax(170px, 1fr)); }
       .summary { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
     }
 
     @media (max-width: 760px) {
       .nav { display: none; }
       .cards { grid-template-columns: repeat(2, minmax(145px, 1fr)); }
+      .conference-grid { grid-template-columns: repeat(2, minmax(145px, 1fr)); }
       .hero h1 { font-size: 24px; }
       .search { width: 100%; margin-left: 0; }
       .toolbar { padding-top: 6px; }
@@ -432,36 +457,36 @@
     };
 
     var TEAM_LOGOS = {
-      'Atlanta Hawks': './assets/logo(1).svg',
-      'Boston Celtics': './assets/logo(2).svg',
-      'Brooklyn Nets': './assets/logo(3).svg',
-      'Charlotte Hornets': './assets/logo(4).svg',
-      'Chicago Bulls': './assets/logo(5).svg',
-      'Cleveland Cavaliers': './assets/logo(6).svg',
-      'Dallas Mavericks': './assets/logo(7).svg',
-      'Denver Nuggets': './assets/logo(8).svg',
-      'Detroit Pistons': './assets/logo(9).svg',
-      'Golden State Warriors': './assets/logo(10).svg',
-      'Houston Rockets': './assets/logo(11).svg',
-      'Indiana Pacers': './assets/logo(12).svg',
-      'LA Clippers': './assets/logo(13).svg',
-      'Los Angeles Lakers': './assets/logo(14).svg',
-      'Memphis Grizzlies': './assets/logo(15).svg',
-      'Miami Heat': './assets/logo(16).svg',
-      'Milwaukee Bucks': './assets/logo(17).svg',
-      'Minnesota Timberwolves': './assets/logo(18).svg',
-      'New Orleans Pelicans': './assets/logo(19).svg',
-      'New York Knicks': './assets/logo(20).svg',
-      'Oklahoma City Thunder': './assets/logo(21).svg',
-      'Orlando Magic': './assets/logo(22).svg',
-      'Philadelphia 76ers': './assets/logo(23).svg',
-      'Phoenix Suns': './assets/logo(24).svg',
-      'Portland Trail Blazers': './assets/logo(25).svg',
-      'Sacramento Kings': './assets/logo(26).svg',
-      'San Antonio Spurs': './assets/logo(27).svg',
-      'Toronto Raptors': './assets/logo(28).svg',
-      'Utah Jazz': './assets/logo(29).svg',
-      'Washington Wizards': './assets/logo.svg'
+      'Atlanta Hawks': 'https://cdn.nba.com/logos/nba/1610612737/global/L/logo.svg',
+      'Boston Celtics': 'https://cdn.nba.com/logos/nba/1610612738/global/L/logo.svg',
+      'Brooklyn Nets': 'https://cdn.nba.com/logos/nba/1610612751/global/L/logo.svg',
+      'Charlotte Hornets': 'https://cdn.nba.com/logos/nba/1610612766/global/L/logo.svg',
+      'Chicago Bulls': 'https://cdn.nba.com/logos/nba/1610612741/global/L/logo.svg',
+      'Cleveland Cavaliers': 'https://cdn.nba.com/logos/nba/1610612739/global/L/logo.svg',
+      'Dallas Mavericks': 'https://cdn.nba.com/logos/nba/1610612742/global/L/logo.svg',
+      'Denver Nuggets': 'https://cdn.nba.com/logos/nba/1610612743/global/L/logo.svg',
+      'Detroit Pistons': 'https://cdn.nba.com/logos/nba/1610612765/global/L/logo.svg',
+      'Golden State Warriors': 'https://cdn.nba.com/logos/nba/1610612744/global/L/logo.svg',
+      'Houston Rockets': 'https://cdn.nba.com/logos/nba/1610612745/global/L/logo.svg',
+      'Indiana Pacers': 'https://cdn.nba.com/logos/nba/1610612754/global/L/logo.svg',
+      'LA Clippers': 'https://cdn.nba.com/logos/nba/1610612746/global/L/logo.svg',
+      'Los Angeles Lakers': 'https://cdn.nba.com/logos/nba/1610612747/global/L/logo.svg',
+      'Memphis Grizzlies': 'https://cdn.nba.com/logos/nba/1610612763/global/L/logo.svg',
+      'Miami Heat': 'https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg',
+      'Milwaukee Bucks': 'https://cdn.nba.com/logos/nba/1610612749/global/L/logo.svg',
+      'Minnesota Timberwolves': 'https://cdn.nba.com/logos/nba/1610612750/global/L/logo.svg',
+      'New Orleans Pelicans': 'https://cdn.nba.com/logos/nba/1610612740/global/L/logo.svg',
+      'New York Knicks': 'https://cdn.nba.com/logos/nba/1610612752/global/L/logo.svg',
+      'Oklahoma City Thunder': 'https://cdn.nba.com/logos/nba/1610612760/global/L/logo.svg',
+      'Orlando Magic': 'https://cdn.nba.com/logos/nba/1610612753/global/L/logo.svg',
+      'Philadelphia 76ers': 'https://cdn.nba.com/logos/nba/1610612755/global/L/logo.svg',
+      'Phoenix Suns': 'https://cdn.nba.com/logos/nba/1610612756/global/L/logo.svg',
+      'Portland Trail Blazers': 'https://cdn.nba.com/logos/nba/1610612757/global/L/logo.svg',
+      'Sacramento Kings': 'https://cdn.nba.com/logos/nba/1610612758/global/L/logo.svg',
+      'San Antonio Spurs': 'https://cdn.nba.com/logos/nba/1610612759/global/L/logo.svg',
+      'Toronto Raptors': 'https://cdn.nba.com/logos/nba/1610612761/global/L/logo.svg',
+      'Utah Jazz': 'https://cdn.nba.com/logos/nba/1610612762/global/L/logo.svg',
+      'Washington Wizards': 'https://cdn.nba.com/logos/nba/1610612764/global/L/logo.svg'
     };
 
     var state = { rows: [], filter: 'all', query: '' };
@@ -553,6 +578,22 @@
 
       if (!rows.length) {
         cards.innerHTML = '<div class="empty">No teams match this filter.</div>';
+        return;
+      }
+
+      if (state.filter === 'all') {
+        var eastRows = rows.filter(function (r) { return r.conference === 'east'; });
+        var westRows = rows.filter(function (r) { return r.conference === 'west'; });
+
+        cards.innerHTML =
+          '<section class="conference-block">' +
+            '<h3 class="conference-title">Eastern Conference</h3>' +
+            '<div class="conference-grid">' + eastRows.map(cardHtml).join('') + '</div>' +
+          '</section>' +
+          '<section class="conference-block">' +
+            '<h3 class="conference-title">Western Conference</h3>' +
+            '<div class="conference-grid">' + westRows.map(cardHtml).join('') + '</div>' +
+          '</section>';
         return;
       }
 
