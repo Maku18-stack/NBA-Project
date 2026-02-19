@@ -3,114 +3,142 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Postseason Oracle | NBA Predict</title>
+  <title>NBA Prediction Center</title>
   <style>
     :root {
-      --bg: #06090f;
-      --panel: #0f141d;
-      --panel-2: #131a26;
-      --line: #263248;
-      --text: #edf2ff;
-      --muted: #92a0bb;
-      --blue: #2d8cff;
-      --green: #22c55e;
-      --danger: #ef4444;
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --line: #d7e1f0;
+      --ink: #0f1a2b;
+      --muted: #5d6b83;
+      --nba-blue: #17408b;
+      --nba-red: #c8102e;
+      --east: #0a66ff;
+      --west: #13a36e;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-      color: var(--text);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--ink);
       background:
-        radial-gradient(1100px 420px at 10% -10%, rgba(36, 99, 235, 0.26), transparent 60%),
-        radial-gradient(900px 500px at 100% 0%, rgba(56, 189, 248, 0.16), transparent 55%),
+        radial-gradient(900px 320px at 0% -10%, rgba(23, 64, 139, 0.11), transparent 60%),
+        radial-gradient(950px 360px at 100% 0%, rgba(200, 16, 46, 0.1), transparent 62%),
         var(--bg);
     }
 
     .topbar {
-      height: 54px;
-      border-bottom: 1px solid #1b2740;
-      background: #081226;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 14px;
+      background: #fff;
+      border-bottom: 2px solid #d6deeb;
       position: sticky;
       top: 0;
       z-index: 20;
     }
 
+    .top-inner {
+      width: min(1220px, 96vw);
+      height: 62px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
     .brand {
       display: flex;
       align-items: center;
-      gap: 9px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      color: var(--nba-blue);
+      white-space: nowrap;
     }
 
     .brand img {
-      width: 24px;
-      height: 24px;
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      border-radius: 3px;
+      box-shadow: 0 0 0 1px #c7d3e5 inset;
       background: #fff;
-      border-radius: 2px;
-      padding: 1px;
+      padding: 2px;
     }
 
     .nav {
       display: flex;
-      gap: 12px;
-      font-size: 11px;
+      gap: 18px;
+      font-size: 12px;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      font-weight: 700;
     }
 
     .nav a {
-      color: #c4d2ef;
       text-decoration: none;
+      color: #30405e;
+      padding-bottom: 4px;
       border-bottom: 2px solid transparent;
-      padding: 4px 0;
     }
 
     .nav a.active {
-      color: #fff;
-      border-bottom-color: #fff;
+      color: var(--nba-blue);
+      border-bottom-color: var(--nba-blue);
     }
 
-    .container {
-      width: min(1160px, 96vw);
-      margin: 16px auto 34px;
+    .page {
+      width: min(1220px, 96vw);
+      margin: 16px auto 30px;
     }
 
-    .head {
+    .hero {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: linear-gradient(95deg, #f9fbff 0%, #ffffff 45%, #fff8fa 100%);
+      box-shadow: 0 18px 40px rgba(24, 44, 74, 0.08);
+      margin-bottom: 16px;
+    }
+
+    .hero-head {
+      padding: 18px 18px 10px;
       display: flex;
       justify-content: space-between;
-      gap: 12px;
       align-items: end;
-      margin-bottom: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
-    .title {
-      font-size: 30px;
-      font-weight: 900;
-      line-height: 1;
+    .hero h1 {
       margin: 0;
+      font-size: 30px;
       letter-spacing: 0.01em;
+      color: var(--nba-blue);
+      line-height: 1;
     }
 
-    .sub {
-      margin: 6px 0 0;
+    .hero p {
+      margin: 8px 0 0;
       color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 600;
     }
 
-    .controls {
+    .back {
+      text-decoration: none;
+      border: 1px solid #b8c8e1;
+      color: #153a74;
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .toolbar {
+      padding: 0 18px 16px;
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
@@ -118,33 +146,34 @@
     }
 
     .pill {
-      border: 1px solid #2a3956;
-      background: #0b1321;
-      color: #d7e2ff;
-      padding: 7px 10px;
+      background: #fff;
+      border: 1px solid #b8c8e1;
       border-radius: 999px;
+      padding: 7px 10px;
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.04em;
       text-transform: uppercase;
+      color: #244676;
       cursor: pointer;
     }
 
     .pill.active {
-      background: #123260;
-      border-color: #3271d5;
+      background: var(--nba-blue);
       color: #fff;
+      border-color: var(--nba-blue);
     }
 
     .search {
-      border: 1px solid #2a3956;
-      background: #0b1321;
-      color: #f1f5ff;
-      border-radius: 999px;
+      margin-left: auto;
       height: 34px;
-      width: 210px;
+      width: 230px;
+      border-radius: 999px;
+      border: 1px solid #b8c8e1;
+      background: #fff;
       padding: 0 12px;
       font-size: 12px;
+      color: var(--ink);
     }
 
     .summary {
@@ -155,202 +184,218 @@
     }
 
     .metric {
-      background: linear-gradient(170deg, #111a2a, #0d1320);
-      border: 1px solid #25324a;
-      border-radius: 10px;
-      padding: 10px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
     }
 
     .metric .k {
-      font-size: 10px;
-      color: #9ab0d7;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    .metric .v {
-      margin-top: 5px;
-      font-size: 21px;
-      font-weight: 900;
-    }
-
-    .board {
-      border: 1px solid #2a364f;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #0a1019;
-    }
-
-    .board-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 12px;
-      border-bottom: 1px solid #24324b;
-      background: linear-gradient(90deg, #0e192a, #111f34);
+      color: #516382;
       font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #b3c4e4;
+      letter-spacing: 0.04em;
+    }
+
+    .metric .v {
+      margin-top: 6px;
+      font-size: 22px;
+      font-weight: 900;
+      color: #102240;
+      line-height: 1.1;
+    }
+
+    .board {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .board-head {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, #f7faff, #fff);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .board-head strong {
+      font-size: 18px;
+      color: #173a73;
+      letter-spacing: 0.01em;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #607293;
+      font-weight: 700;
     }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(6, minmax(150px, 1fr));
-      gap: 1px;
-      background: #1e2a40;
+      grid-template-columns: repeat(5, minmax(170px, 1fr));
+      gap: 12px;
+      padding: 12px;
     }
 
-    .team-card {
-      background: var(--panel);
-      min-height: 138px;
-      padding: 9px;
+    .card {
+      border: 1px solid #d6e0f0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      border-top: 2px solid transparent;
+      min-height: 260px;
+      box-shadow: 0 4px 18px rgba(18, 40, 76, 0.05);
     }
 
-    .team-card.east { border-top-color: #2d8cff; }
-    .team-card.west { border-top-color: #22c55e; }
+    .card.east { border-top: 4px solid var(--east); }
+    .card.west { border-top: 4px solid var(--west); }
 
-    .tag-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 9px;
-      color: #9eb0cf;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 800;
+    .team-photo {
+      width: 100%;
+      height: 106px;
+      object-fit: cover;
+      background: #edf2fb;
+      border-bottom: 1px solid #d8e2f0;
     }
 
-    .delta.up { color: var(--green); }
-    .delta.down { color: var(--danger); }
-
-    .team-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .logo-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 1px solid #3b4f71;
-      background: radial-gradient(circle at 30% 20%, #1d4ed8, #0b1730 70%);
-      color: #fff;
+    .card-body {
+      padding: 10px;
       display: grid;
-      place-items: center;
-      font-size: 9px;
-      font-weight: 800;
+      gap: 8px;
+      flex: 1;
     }
 
-    .team-name {
-      font-size: 13px;
-      font-weight: 800;
-      line-height: 1.1;
-    }
-
-    .tiny {
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: 10px;
-      color: #8ea1c2;
-      margin-top: 1px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #5f7498;
+    }
+
+    .abbr {
+      font-size: 17px;
+      font-weight: 900;
+      color: #102240;
+      line-height: 1;
+    }
+
+    .team {
+      font-size: 11px;
+      color: #5b6f90;
+      line-height: 1.25;
+      min-height: 28px;
+      font-weight: 600;
     }
 
     .prob {
-      margin-top: 8px;
-      font-size: 30px;
+      font-size: 31px;
       font-weight: 900;
+      color: #11294f;
       letter-spacing: -0.02em;
       line-height: 1;
     }
 
     .bar {
-      margin-top: 7px;
       height: 4px;
       border-radius: 999px;
-      background: #1f2c43;
+      background: #e7edf7;
       overflow: hidden;
     }
 
     .bar > div {
       height: 100%;
-      background: linear-gradient(90deg, #2f8fff, #35d0ff);
+      background: linear-gradient(90deg, #2f82ff, #21b8d8);
     }
 
     .stats {
-      margin-top: 8px;
+      font-size: 10px;
+      color: #5f7396;
       display: flex;
       justify-content: space-between;
-      font-size: 10px;
-      color: #95a8cb;
-      gap: 8px;
+      gap: 6px;
+      font-weight: 700;
     }
 
     .empty {
-      padding: 20px;
+      grid-column: 1 / -1;
+      border: 1px dashed #c9d6ea;
+      border-radius: 12px;
+      padding: 24px;
       text-align: center;
-      color: #9db0d2;
-      font-size: 13px;
+      color: #5b7093;
+      font-weight: 700;
+      background: #f8fbff;
     }
 
-    @media (max-width: 1160px) {
-      .cards { grid-template-columns: repeat(4, minmax(150px, 1fr)); }
+    @media (max-width: 1150px) {
+      .cards { grid-template-columns: repeat(3, minmax(170px, 1fr)); }
       .summary { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
     }
 
     @media (max-width: 760px) {
       .nav { display: none; }
-      .cards { grid-template-columns: repeat(2, minmax(130px, 1fr)); }
-      .title { font-size: 24px; }
-      .search { width: 160px; }
+      .cards { grid-template-columns: repeat(2, minmax(145px, 1fr)); }
+      .hero h1 { font-size: 24px; }
+      .search { width: 100%; margin-left: 0; }
+      .toolbar { padding-top: 6px; }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">
-      <img src="./assets/logo-nba.svg" alt="NBA" />
-      <span>NBA PREDICT</span>
+    <div class="top-inner">
+      <div class="brand">
+        <img src="./assets/logo-nba.svg" alt="NBA" />
+        <span>NBA PREDICTION CENTER</span>
+      </div>
+      <nav class="nav">
+        <a href="./index.html">Home</a>
+        <a class="active" href="./prediction.html">Predictions</a>
+        <a href="#">Standings</a>
+        <a href="#">Teams</a>
+        <a href="#">Players</a>
+      </nav>
     </div>
-    <nav class="nav">
-      <a href="./index.html">Home</a>
-      <a class="active" href="./prediction.html">Postseason Oracle</a>
-      <a href="#">Teams</a>
-      <a href="#">Players</a>
-    </nav>
   </header>
 
-  <main class="container">
-    <section class="head">
-      <div>
-        <h1 class="title">POSTSEASON ORACLE</h1>
-        <p class="sub">Powered by prediction model | Conference probabilities</p>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-head">
+        <div>
+          <h1>Postseason Probability Board</h1>
+          <p>Unique card view using your formatted prediction model output.</p>
+        </div>
+        <a class="back" href="./index.html">Back to Home</a>
       </div>
-      <div class="controls">
+      <div class="toolbar">
         <button class="pill active" data-filter="all">All</button>
         <button class="pill" data-filter="east">East</button>
         <button class="pill" data-filter="west">West</button>
-        <input id="search" class="search" type="search" placeholder="Search team..." />
+        <input id="search" class="search" type="search" placeholder="Search team" />
       </div>
     </section>
 
     <section class="summary">
       <article class="metric"><div class="k">Top East</div><div class="v" id="mEast">-</div></article>
       <article class="metric"><div class="k">Top West</div><div class="v" id="mWest">-</div></article>
-      <article class="metric"><div class="k">Avg Probability</div><div class="v" id="mAvg">-</div></article>
+      <article class="metric"><div class="k">Average Probability</div><div class="v" id="mAvg">-</div></article>
       <article class="metric"><div class="k">Teams Loaded</div><div class="v" id="mCount">0</div></article>
     </section>
 
     <section class="board">
       <div class="board-head">
-        <span id="boardTitle">All Teams</span>
-        <span id="boardMeta">0 teams</span>
+        <strong id="boardTitle">All Teams</strong>
+        <span class="meta" id="boardMeta">0 teams</span>
       </div>
       <div id="cards" class="cards"></div>
     </section>
@@ -375,6 +420,13 @@
       'San Antonio Spurs': { conference: 'west', abbr: 'SAS' }, 'Utah Jazz': { conference: 'west', abbr: 'UTA' }
     };
 
+    var PHOTO_POOL = [
+      './assets/thumbnail_small(104).jpeg', './assets/thumbnail_small(105).jpeg', './assets/thumbnail_small(106).jpeg',
+      './assets/thumbnail_small(107).jpeg', './assets/thumbnail_small(108).jpeg', './assets/thumbnail_small(109).jpeg',
+      './assets/GR_MIL_ORL-1.jpg', './assets/GR_MEM_DEN.jpg', './assets/GR_IND_BKN.jpg',
+      './assets/thumbnail_small(99).jpeg', './assets/thumbnail_small(98).jpeg', './assets/thumbnail_small(97).jpeg'
+    ];
+
     var state = { rows: [], filter: 'all', query: '' };
 
     function pctNum(value) {
@@ -383,12 +435,26 @@
       return NaN;
     }
 
+    function hash(str) {
+      var h = 0;
+      for (var i = 0; i < str.length; i++) {
+        h = ((h << 5) - h) + str.charCodeAt(i);
+        h |= 0;
+      }
+      return Math.abs(h);
+    }
+
+    function photoFor(team) {
+      return PHOTO_POOL[hash(team) % PHOTO_POOL.length];
+    }
+
     function normalize(rows) {
       return rows.map(function (r) {
         var team = r.TeamName || r.team;
         var prob = pctNum(r.PlayoffProbability || r.playoff_probability_percent);
-        var winPct = pctNum(r.WinPCT || r.WinPct || '0');
+        var winPct = pctNum(r.WinPCT || '0%');
         var meta = TEAM_META[team] || { conference: 'east', abbr: 'NA' };
+
         return {
           team: team,
           abbr: meta.abbr,
@@ -397,20 +463,26 @@
           winPct: winPct,
           points: Number(r.PointsPG || 0),
           oppPoints: Number(r.OppPointsPG || 0),
-          threePct: String(r.ThreePointPCT || '-')
+          threePct: String(r.ThreePointPCT || '-'),
+          photo: photoFor(team)
         };
-      }).filter(function (r) { return r.team && Number.isFinite(r.probability); })
-        .sort(function (a, b) { return b.probability - a.probability; });
+      }).filter(function (r) {
+        return r.team && Number.isFinite(r.probability);
+      }).sort(function (a, b) {
+        return b.probability - a.probability;
+      });
     }
 
-    function filteredRows() {
-      var list = state.rows;
-      if (state.filter !== 'all') list = list.filter(function (r) { return r.conference === state.filter; });
+    function getRows() {
+      var rows = state.rows;
+      if (state.filter !== 'all') rows = rows.filter(function (r) { return r.conference === state.filter; });
       if (state.query) {
         var q = state.query.toLowerCase();
-        list = list.filter(function (r) { return r.team.toLowerCase().includes(q) || r.abbr.toLowerCase().includes(q); });
+        rows = rows.filter(function (r) {
+          return r.team.toLowerCase().includes(q) || r.abbr.toLowerCase().includes(q);
+        });
       }
-      return list;
+      return rows;
     }
 
     function setSummary(rows) {
@@ -426,42 +498,40 @@
       document.getElementById('mCount').textContent = String(rows.length);
     }
 
-    function cardHtml(r, i) {
-      var trend = r.probability >= 50 ? '+' + (r.probability - 50).toFixed(1) : '-' + (50 - r.probability).toFixed(1);
-      var trendClass = r.probability >= 50 ? 'up' : 'down';
-      var confLabel = r.conference.toUpperCase();
-      return '<article class="team-card ' + r.conference + '">' +
-        '<div>' +
-          '<div class="tag-row"><span>' + confLabel + '</span><span class="delta ' + trendClass + '">' + trend + '</span></div>' +
-          '<div class="team-row"><span class="logo-dot">' + r.abbr + '</span><div><div class="team-name">' + r.abbr + '</div><div class="tiny">' + r.team + '</div></div></div>' +
+    function cardHtml(r) {
+      var conf = r.conference.toUpperCase();
+      var trendVal = r.probability - 50;
+      var trend = (trendVal >= 0 ? '+' : '') + trendVal.toFixed(1);
+      return '<article class="card ' + r.conference + '">' +
+        '<img class="team-photo" src="' + r.photo + '" alt="' + r.team + '" loading="lazy" />' +
+        '<div class="card-body">' +
+          '<div class="topline"><span>' + conf + '</span><span>' + trend + '</span></div>' +
+          '<div class="abbr">' + r.abbr + '</div>' +
+          '<div class="team">' + r.team + '</div>' +
           '<div class="prob">' + r.probability.toFixed(1) + '%</div>' +
           '<div class="bar"><div style="width:' + Math.max(0, Math.min(100, r.probability)).toFixed(1) + '%"></div></div>' +
+          '<div class="stats"><span>Win% ' + r.winPct.toFixed(1) + '</span><span>3P ' + r.threePct + '</span></div>' +
         '</div>' +
-        '<div class="stats"><span>Win: ' + r.winPct.toFixed(1) + '%</span><span>3P: ' + r.threePct + '</span></div>' +
       '</article>';
     }
 
     function render() {
-      var rows = filteredRows();
+      var rows = getRows();
       var cards = document.getElementById('cards');
-      var boardTitle = document.getElementById('boardTitle');
-      var boardMeta = document.getElementById('boardMeta');
-
       var titleMap = { all: 'All Teams', east: 'Eastern Conference', west: 'Western Conference' };
-      boardTitle.textContent = titleMap[state.filter];
-      boardMeta.textContent = rows.length + ' teams';
+
+      document.getElementById('boardTitle').textContent = titleMap[state.filter];
+      document.getElementById('boardMeta').textContent = rows.length + ' teams';
 
       if (!rows.length) {
-        cards.innerHTML = '<div class="empty">No teams found for this filter.</div>';
-        cards.style.gridTemplateColumns = '1fr';
+        cards.innerHTML = '<div class="empty">No teams match this filter.</div>';
         return;
       }
 
-      cards.style.gridTemplateColumns = '';
       cards.innerHTML = rows.map(cardHtml).join('');
     }
 
-    function bindUI() {
+    function bind() {
       Array.prototype.forEach.call(document.querySelectorAll('[data-filter]'), function (btn) {
         btn.addEventListener('click', function () {
           state.filter = btn.getAttribute('data-filter');
@@ -482,11 +552,11 @@
         if (!res.ok) throw new Error('Could not load formatted_predictions_percent.json');
         return res.json();
       })
-      .then(function (data) {
-        if (!Array.isArray(data)) throw new Error('Invalid prediction payload');
-        state.rows = normalize(data);
+      .then(function (rows) {
+        if (!Array.isArray(rows)) throw new Error('Invalid prediction payload');
+        state.rows = normalize(rows);
         setSummary(state.rows);
-        bindUI();
+        bind();
         render();
       })
       .catch(function (err) {
